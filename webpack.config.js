@@ -1,6 +1,6 @@
-'use strict';
-let path = require('path');
-let webpack = require('webpack');
+var path = require('path');
+var webpack = require('webpack');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/main.ts',
@@ -33,7 +33,11 @@ module.exports = {
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)@angular/,
             path.join(process.cwd(), 'app')
-        )
+        ),
+        new CopyWebpackPlugin([    
+            { from: 'node_modules/core-js/client/shim.min.js' },
+            { from: 'node_modules/zone.js/dist/zone.min.js' }
+        ])
     ],
 
     resolve: {
